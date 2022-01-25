@@ -17,7 +17,7 @@ public class Hyperplane : MonoBehaviour
     //float c = 0;
     [SerializeField]
     [Range(-1, 1)]
-    float d = 0.5F;
+    float d = 0F;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +33,7 @@ public class Hyperplane : MonoBehaviour
 
     public float DistanceTo(Vector4 vertex)
     {
-        return vertex[3] - d;
+        return vertex.w - d;
     }
 
     public Vector3 CrossSectionWithLine(Vector4 a, Vector4 b)
