@@ -1173,7 +1173,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1198,102 +1198,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &481508422
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 481508426}
-  - component: {fileID: 481508425}
-  - component: {fileID: 481508424}
-  - component: {fileID: 481508423}
-  m_Layer: 0
-  m_Name: Cylinder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!136 &481508423
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481508422}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!23 &481508424
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481508422}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &481508425
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481508422}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &481508426
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481508422}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.974, y: 0.941, z: 2.901}
-  m_LocalScale: {x: 0.4, y: 0.8, z: 0.4}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &674117292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,12 +1287,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782815428}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.776, y: 1.192, z: -5.017}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.21399975, y: 1.052, z: 0.7129998}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1330418886}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &782815434
 MonoBehaviour:
@@ -1508,7 +1412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e665623980850c4e9cea99e2b2d7a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FilePath: Assets/4D objects/4DCube.4dm
+  Shape: 0
   Hyperplane: {fileID: 1903870930}
   DebugRotate4D_XY: 0
   DebugRotate4D_XZ: 0
@@ -1528,9 +1432,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 933507659}
-  - component: {fileID: 933507658}
   - component: {fileID: 933507657}
   - component: {fileID: 933507656}
+  - component: {fileID: 933507658}
   m_Layer: 0
   m_Name: ToyTetrahedron
   m_TagString: Untagged
@@ -1655,7 +1559,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -1672,7 +1576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e665623980850c4e9cea99e2b2d7a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FilePath: Assets/4D objects/4DTetrahedron.4dm
+  Shape: 1
   Hyperplane: {fileID: 1903870930}
   DebugRotate4D_XY: 0
   DebugRotate4D_XZ: 0
@@ -1690,12 +1594,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933507655}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.203, y: 1.196, z: -4.988}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.2130003, y: 1.056, z: 0.7420001}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 1330418886}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1022941962
 GameObject:
@@ -1921,7 +1825,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8fdbd218014a6cd4c91d833d676941f7, type: 2}
+  - {fileID: 2100000, guid: 09c0705c43434b540b63f61e6c0e3f37, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1934,7 +1838,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -2767,8 +2671,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127465023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.46262, y: 0.047825, z: -0.46262}
+  m_LocalScale: {x: 0.90748, y: 0.90748, z: 0.90748}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -2779,7 +2683,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21896
+  m_Name: pb_Mesh35388
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2937,6 +2841,39 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1330418885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1330418886}
+  m_Layer: 0
+  m_Name: 4DSpace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1330418886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330418885}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.99, y: 0.14, z: -5.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1903870931}
+  - {fileID: 782815433}
+  - {fileID: 933507659}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1836313981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2948,6 +2885,8 @@ GameObject:
   - component: {fileID: 1836313984}
   - component: {fileID: 1836313983}
   - component: {fileID: 1836313982}
+  - component: {fileID: 1836313985}
+  - component: {fileID: 1836313986}
   m_Layer: 0
   m_Name: XR Rig
   m_TagString: Untagged
@@ -2996,13 +2935,167 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836313981}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.99, y: 0, z: -5.73}
+  m_LocalPosition: {x: 4.99, y: 0.14, z: -5.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 674117293}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1836313985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836313981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1a9029f8-7a46-46b9-9eff-e9ae8365f611
+    m_ActionName: XRI HMD/Position
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aed87fe6-2b01-4dd2-a8fa-195578fd8158
+    m_ActionName: XRI HMD/Rotation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 83a7af0b-87e3-42c3-a909-95fbf8091e4f
+    m_ActionName: XRI LeftHand/Position
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cb6b7130-2bac-4ef7-abe4-6991ae7d419d
+    m_ActionName: XRI LeftHand/Rotation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 33754c03-48ec-46ef-9bc6-22ed6bfdd8e8
+    m_ActionName: XRI LeftHand/Select
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0c0991c5-d329-4afc-8892-1076b440477c
+    m_ActionName: XRI LeftHand/Activate
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7e1eced7-c774-4fe5-be8f-d8711f646d9e
+    m_ActionName: XRI LeftHand/UI Press
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 664a62b0-e178-421d-b3f8-014eec01591d
+    m_ActionName: XRI LeftHand/Haptic Device
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cbeaf823-3b69-4004-8ec8-13ea2ca3fc31
+    m_ActionName: XRI LeftHand/Teleport Select
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a21db72c-4843-4839-b4d0-3ce8d287cb86
+    m_ActionName: XRI LeftHand/Teleport Mode Activate
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 89ce8348-6001-41a3-85b9-f8f2e2dcad7c
+    m_ActionName: XRI LeftHand/Teleport Mode Cancel
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9164e093-ebd4-4923-af32-1b52f31c2d66
+    m_ActionName: XRI LeftHand/Turn
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9693e25f-8a4f-4aed-842f-3961243c69a1
+    m_ActionName: XRI LeftHand/Move
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 21b75b25-12ad-410f-b4f8-a7745b7aca27
+    m_ActionName: XRI LeftHand/Rotate Anchor
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bfa204c7-3c92-4193-bad1-39eb71920042
+    m_ActionName: XRI LeftHand/Translate Anchor
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c4990d70-7b8a-4ce1-b03c-da86716b8352
+    m_ActionName: XRI RightHand/Position
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ee6bf5bf-bb0a-4a50-8327-cb654b19e298
+    m_ActionName: XRI RightHand/Rotation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ac96c10b-c955-4a46-8e67-bf16bc069b53
+    m_ActionName: XRI RightHand/Select
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 41976d89-60de-4deb-bff9-16b4af96b290
+    m_ActionName: XRI RightHand/Activate
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 65174b45-c2ee-4f90-93bb-fb4084eaaab3
+    m_ActionName: XRI RightHand/UI Press
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 57b2a1b4-3290-46d6-ac07-4854ee8f91b1
+    m_ActionName: XRI RightHand/Haptic Device
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 02e43582-8973-4940-af06-dff6158e3df2
+    m_ActionName: XRI RightHand/Teleport Select
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a6c7231d-c55d-4dd4-9e87-877bb5522ef5
+    m_ActionName: XRI RightHand/Teleport Mode Activate
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d587b60c-39a0-4365-8075-477ce484ba0f
+    m_ActionName: XRI RightHand/Teleport Mode Cancel
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9fb2eb2b-2fb6-4328-8167-10a1bf11b424
+    m_ActionName: XRI RightHand/Turn
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 00a4dc9f-1ee6-4349-b0e9-72d5dccaadd6
+    m_ActionName: XRI RightHand/Move
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b5d8312-f609-4895-b70f-81a722b2ae11
+    m_ActionName: XRI RightHand/Rotate Anchor
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6f7cf253-7062-443b-b10f-2be48a33f027
+    m_ActionName: XRI RightHand/Translate Anchor
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Generic XR Controller
+  m_DefaultActionMap: XRI HMD
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1836313986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836313981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ddc807f9b64ec849b4ee8ef938a1264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1903870929
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,10 +3133,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1903870929}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5168981, z: 0.8569999}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.009000301, y: 0.98, z: 0.3000002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 1330418886}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

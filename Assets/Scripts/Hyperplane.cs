@@ -1,6 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 public class Hyperplane : MonoBehaviour
 {
@@ -19,16 +24,19 @@ public class Hyperplane : MonoBehaviour
     [Range(-1, 1)]
     float d = 0F;
 
+    Slider Slider;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        Slider = new Slider(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //UpdateEquation();
+        Slider.Update();
+        d = Slider.Value;
     }
 
     public float DistanceTo(Vector4 vertex)
@@ -44,13 +52,85 @@ public class Hyperplane : MonoBehaviour
         float newZ = a[2] + (b[2] - a[2]) * delta;
         return new Vector3(newX, newY, newZ);
     }
+}
 
-    //void UpdateEquation()
-    //{
-    //    string a_str = a < 0 ? $"- {-a}" : a.ToString("F2");
-    //    string b_str = b < 0 ? $"- {-b}" : "+ " + b.ToString("F2");
-    //    string c_str = c < 0 ? $"- {-c}" : "+ " + c.ToString("F2");
-    //    string d_str = d < 0 ? $"- {-d}" : "+ " + d.ToString("F2");
-    //    CurrentEquation = $"w = {a_str}*x {b_str}*y {c_str}*z {d_str}";
-    //}
+class Slider
+{
+    GameObject RightController;
+    GameObject LeftController;
+
+    GameObject Cylinder;
+    GameObject Ball;
+    public float Value = 0;
+
+    private InputActionMap LeftControllerInputMap;
+    private InputActionMap RightControllerInputMap;
+
+    public Slider(Hyperplane h)
+    {
+
+        RightController = GameObject.Find("RightHand Controller");
+        LeftController = GameObject.Find("LeftHand Controller");
+
+        GameObject XrRig = GameObject.Find("XR Rig");
+
+        LeftControllerInputMap = XrRig.GetComponent<ControllerInputReader>().LeftControllerInputMap;
+        RightControllerInputMap = XrRig.GetComponent<ControllerInputReader>().RightControllerInputMap;
+
+        Cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        Cylinder.GetComponent<CapsuleCollider>().enabled = false;
+        Cylinder.transform.SetParent(h.transform);
+        Cylinder.transform.localPosition = new Vector3(0, 0, 0);
+        Cylinder.transform.localScale = new Vector3(0.02f, 0.4f, 0.02f);
+        Cylinder.transform.Rotate(new Vector3(0, 0, 90));
+
+        Cylinder.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Slider");
+
+
+        Ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        Ball.transform.SetParent(h.transform);
+        Ball.transform.localPosition = new Vector3(0, 0, 0); 
+        Ball.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+        Ball.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Slider");
+        
+        //Ball.AddComponent<XRGrabInteractable>();
+        //Ball.GetComponent<XRGrabInteractable>().tightenPosition = 0.4f;
+        //Ball.GetComponent<Rigidbody>().useGravity = false;
+
+    }
+    public void Update()
+    {
+        CheckForPlayerInteraction();
+        UpdatePosition();
+    }
+
+    public void UpdatePosition()
+    {
+        float posX = Ball.transform.localPosition.x;
+        if (posX < -0.4)
+        {
+            posX = -0.4f;
+        }
+        if (posX > 0.4)
+        {
+            posX = 0.4f;
+        }
+        Ball.transform.localPosition = new Vector3(posX, 0, 0);
+
+        Value = (float)(posX / 0.2);
+    }
+    public void CheckForPlayerInteraction()
+    {
+
+        if (LeftControllerInputMap.FindAction("Select").ReadValue<float>() > 0.5 && Math.Abs((LeftController.transform.position - Ball.transform.position).magnitude) < 0.07)
+        {
+            Ball.transform.position = new Vector3(LeftController.transform.position.x, Ball.transform.position.y, Ball.transform.position.z);
+        }
+
+        if (RightControllerInputMap.FindAction("Select").ReadValue<float>() > 0.5 && Math.Abs((RightController.transform.position - Ball.transform.position).magnitude) < 0.07)
+        {
+            Ball.transform.position = new Vector3(RightController.transform.position.x, Ball.transform.position.y, Ball.transform.position.z);
+        }
+    }
 }

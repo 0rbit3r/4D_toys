@@ -8,9 +8,12 @@ using Assets.Scripts;
 
 public class Object4D : MonoBehaviour
 {
-
+    public enum Shapes{
+        Tesseract,
+        Cell_5,
+    }
     [SerializeField]
-    string FilePath;
+    Shapes Shape;
 
     [SerializeField]
     Hyperplane Hyperplane;
@@ -42,12 +45,17 @@ public class Object4D : MonoBehaviour
 
     public void Start()
     {
-        FromFile(FilePath);
+#if DEBUG
+       FromFile(Shape);
+#else
+        FromString(ObjectManager.GetShapeData(Shape));
+#endif
+
+
         UpdateRotation();
         //Position = new Vector4(transform.position.x, transform.position.y, transform.position.z, 0);
         //Rotation = new Vector4(transform.rotation.x)
     }
-
     public void Update()
     {
         if (DebugRotate4D_XY)
@@ -86,11 +94,36 @@ public class Object4D : MonoBehaviour
         }
     }
 
-    public void FromFile(string filePath)
+
+    string PathToShape(Shapes shape)
+    {
+        return $"Assets/4D objects/{Enum.GetName(typeof(Shapes),shape)}.4dm";
+    }
+
+    public void FromFile(Shapes shape)
+    {
+        string filePath = PathToShape(shape);
+        StreamReader reader = new StreamReader(filePath);
+        FromReader(reader);
+        
+    }
+
+    public void FromString(string str)
+    {
+
+        var stream = new MemoryStream();
+        var writer = new StreamWriter(stream);
+        writer.Write(str);
+        writer.Flush();
+        stream.Position = 0;
+        StreamReader reader = new StreamReader(stream);
+        FromReader(reader);
+    }
+
+    public void FromReader(StreamReader reader)
     {
         try
         {
-            StreamReader reader = new StreamReader(filePath);
 
             Vertices = new Vector4[int.Parse(reader.ReadLine())];
             RotatedVertices = new Vector4[Vertices.Length];
@@ -144,7 +177,7 @@ public class Object4D : MonoBehaviour
         {
             case RotationPlane.xy:
                 newRotation = new Matrix4x4(new Vector4(cos, -sin, 0, 0),
-                                            new Vector4(sin,  cos, 0, 0),
+                                            new Vector4(sin, cos, 0, 0),
                                             new Vector4(0, 0, 1, 0),
                                             new Vector4(0, 0, 0, 1));
                 break;

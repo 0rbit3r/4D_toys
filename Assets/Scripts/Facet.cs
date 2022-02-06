@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Facet : MonoBehaviour
 {
-    Object4D parentObj;
+    Object4D Parent4DObject;
 
     //Indexes pointing at Vertices of parent object
     public int[] FacetVertIndexes;
@@ -20,7 +20,7 @@ public class Facet : MonoBehaviour
     public void Init(int[] vertices, Color color, Object4D parent)
     {
         FacetVertIndexes = vertices;
-        parentObj = parent;
+        Parent4DObject = parent;
 
         FacetEdges = CreateEdges();
 
@@ -41,7 +41,7 @@ public class Facet : MonoBehaviour
     public void RenderIn(Hyperplane plane)
     {
         Mesh.Clear();
-        var vectors = CutWith(parentObj.RotatedVertices, plane);
+        var vectors = CutWith(Parent4DObject.RotatedVertices, plane);
         UpdateMesh(vectors);
 
     }
@@ -67,33 +67,6 @@ public class Facet : MonoBehaviour
 
             Mesh.triangles = newTriangles.ToArray();
         }
-
-
-        //List<Vector3> tempMeshVertices = new List<Vector3>(Mesh.vertices);
-        //int offset = tempMeshVertices.Count;
-        //tempMeshVertices.AddRange(vertsToRender);
-        //Mesh.vertices = tempMeshVertices.ToArray();
-
-        //var newTriangles = new List<int>();
-
-        //if (vertsToRender.Length > 2)
-        //{
-        //    for (int i = 1; i < vertsToRender.Length - 1; i++)
-        //    {
-        //        newTriangles.Add(offset + 0);
-        //        newTriangles.Add(offset + i);
-        //        newTriangles.Add(offset + i + 1);
-
-        //        newTriangles.Add(offset + 0);
-        //        newTriangles.Add(offset + i + 1);
-        //        newTriangles.Add(offset + i);
-
-        //    }
-        //}
-
-        //var tempTriangles = new List<int>(Mesh.triangles);
-        //tempTriangles.AddRange(newTriangles);
-        //Mesh.triangles = tempTriangles.ToArray();
 
     }
 
@@ -139,7 +112,7 @@ public class Facet : MonoBehaviour
 
         for (int i = 0; i < toReturn.Length; i++)
         {
-            toReturn[i] = parentObj.Vertices[FacetVertIndexes[i]];
+            toReturn[i] = Parent4DObject.Vertices[FacetVertIndexes[i]];
         }
 
         return toReturn;
