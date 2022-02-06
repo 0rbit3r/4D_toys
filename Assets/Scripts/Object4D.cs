@@ -16,6 +16,9 @@ public class Object4D : MonoBehaviour
     Shapes Shape;
 
     [SerializeField]
+    float InitialScale;
+
+    [SerializeField]
     Hyperplane Hyperplane;
 
     [SerializeField]
@@ -40,6 +43,7 @@ public class Object4D : MonoBehaviour
     GameObject[] Facets;
 
     Vector4 Position;
+    Vector4 Scale;
     Matrix4x4 RotationMatrix = Matrix4x4.identity;
 
 
@@ -51,10 +55,13 @@ public class Object4D : MonoBehaviour
         FromString(ObjectManager.GetShapeData(Shape));
 #endif
 
+        Position = new Vector4(transform.position.x, transform.position.y, transform.position.z, 0);
+        Scale = new Vector4(InitialScale, InitialScale, InitialScale, InitialScale);
+        Vertices = Vertices.Select(v => new Vector4(v.x * InitialScale, v.y * InitialScale, v.z * InitialScale, v.w * InitialScale)).ToArray();
+
 
         UpdateRotation();
-        //Position = new Vector4(transform.position.x, transform.position.y, transform.position.z, 0);
-        //Rotation = new Vector4(transform.rotation.x)
+
     }
     public void Update()
     {

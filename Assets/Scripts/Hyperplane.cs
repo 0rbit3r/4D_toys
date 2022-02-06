@@ -9,20 +9,8 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 public class Hyperplane : MonoBehaviour
 {
-    //[SerializeField]
-    //string CurrentEquation;
-    //[SerializeField]
-    //[Range(-1, 1)]
-    //float a = 0;
-    //[SerializeField]
-    //[Range(-1, 1)]
-    //float b = 0;
-    //[SerializeField]
-    //[Range(-1, 1)]
-    //float c = 0;
-    [SerializeField]
-    [Range(-1, 1)]
     float d = 0F;
+
 
     Slider Slider;
 
@@ -63,6 +51,10 @@ class Slider
     GameObject Ball;
     public float Value = 0;
 
+    public float MaxValue = 2;
+
+    public float SliderLength = 0.4f;
+
     private InputActionMap LeftControllerInputMap;
     private InputActionMap RightControllerInputMap;
 
@@ -81,7 +73,7 @@ class Slider
         Cylinder.GetComponent<CapsuleCollider>().enabled = false;
         Cylinder.transform.SetParent(h.transform);
         Cylinder.transform.localPosition = new Vector3(0, 0, 0);
-        Cylinder.transform.localScale = new Vector3(0.02f, 0.4f, 0.02f);
+        Cylinder.transform.localScale = new Vector3(SliderLength/20, SliderLength, SliderLength/20);
         Cylinder.transform.Rotate(new Vector3(0, 0, 90));
 
         Cylinder.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Slider");
@@ -90,7 +82,7 @@ class Slider
         Ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         Ball.transform.SetParent(h.transform);
         Ball.transform.localPosition = new Vector3(0, 0, 0); 
-        Ball.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        Ball.transform.localScale = new Vector3(SliderLength / 4, SliderLength / 4, SliderLength / 4);
 
         Ball.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Slider");
         
@@ -108,17 +100,17 @@ class Slider
     public void UpdatePosition()
     {
         float posX = Ball.transform.localPosition.x;
-        if (posX < -0.4)
+        if (posX < -SliderLength)
         {
-            posX = -0.4f;
+            posX = -SliderLength;
         }
-        if (posX > 0.4)
+        if (posX > SliderLength)
         {
-            posX = 0.4f;
+            posX = SliderLength;
         }
         Ball.transform.localPosition = new Vector3(posX, 0, 0);
 
-        Value = (float)(posX / 0.2);
+        Value = (float)(posX / (SliderLength / MaxValue));
     }
     public void CheckForPlayerInteraction()
     {
