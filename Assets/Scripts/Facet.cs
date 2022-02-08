@@ -25,7 +25,7 @@ public class Facet : MonoBehaviour
         FacetEdges = CreateEdges();
 
 
-        Material = new Material(Resources.Load<Material>("DefaultFacet"));
+        Material = new Material(Resources.Load<Material>("Materials/DefaultFacet"));
         Material.color = color;
 
         gameObject.AddComponent<MeshRenderer>();
@@ -77,9 +77,15 @@ public class Facet : MonoBehaviour
         return ConvexHull.GetConvexEdges(flattenedVertices);
     }
 
+    /// <summary>
+    /// Returns cross section with hyperplane
+    /// </summary>
+    /// <param name="vertices"></param>
+    /// <param name="hyperplane"></param>
+    /// <returns></returns>
     public Vector3[] CutWith(Vector4[] vertices, Hyperplane hyperplane)
     {
-        List<Vector3> result = new List<Vector3>();
+        List<Vector3> resultingPolygon = new List<Vector3>();
 
         foreach (var edge in FacetEdges)
         {
@@ -92,18 +98,18 @@ public class Facet : MonoBehaviour
             if ((hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item1]]) < 0 && hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item2]]) >= 0)
                 || (hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item1]]) >= 0 && hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item2]]) < 0))
             {
-                result.Add(hyperplane.CrossSectionWithLine(vertices[FacetVertIndexes[edge.Item1]], vertices[FacetVertIndexes[edge.Item2]]));
+                resultingPolygon.Add(hyperplane.CrossSectionWithLine(vertices[FacetVertIndexes[edge.Item1]], vertices[FacetVertIndexes[edge.Item2]]));
             }
         }
 
-        if (result.Count >= 3)
+        resultingPolygon = resultingPolygon.Distinct().ToList();
+        if (resultingPolygon.Count >= 3)
         {
-            result = result.Distinct().ToList();
-            var baseVector = result[1] - result[0];
-            result.Sort((x, y) => Vector3.Angle(baseVector, x - result[0]).CompareTo(Vector3.Angle(baseVector, y - result[0]))); //Possibly needs more thought
+            var baseVector = resultingPolygon[1] - resultingPolygon[0];
+            resultingPolygon.Sort((x, y) => Vector3.Angle(baseVector, x - resultingPolygon[0]).CompareTo(Vector3.Angle(baseVector, y - resultingPolygon[0]))); //Possibly needs more thought
         }
 
-        return result.ToArray();
+        return resultingPolygon.ToArray();
     }
 
     public Vector4[] GetDereferencedVertexList()

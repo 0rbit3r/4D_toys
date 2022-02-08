@@ -8,9 +8,12 @@ using Assets.Scripts;
 
 public class Object4D : MonoBehaviour
 {
-    public enum Shapes{
+    public enum Shapes
+    {
         Tesseract,
         Cell_5,
+        Spheric_Icosahedron,
+        Test,
     }
     [SerializeField]
     Shapes Shape;
@@ -18,8 +21,6 @@ public class Object4D : MonoBehaviour
     [SerializeField]
     float InitialScale;
 
-    [SerializeField]
-    Hyperplane Hyperplane;
 
     [SerializeField]
     bool DebugRotate4D_XY;
@@ -33,6 +34,8 @@ public class Object4D : MonoBehaviour
     bool DebugRotate4D_YW;
     [SerializeField]
     bool DebugRotate4D_ZW;
+    [SerializeField]
+    float Degrees = 0;
 
     public bool RotationNeedsUpdate;
 
@@ -43,51 +46,66 @@ public class Object4D : MonoBehaviour
     GameObject[] Facets;
 
     Vector4 Position;
-    Vector4 Scale;
+    //Vector4 Scale;
     Matrix4x4 RotationMatrix = Matrix4x4.identity;
 
+    Hyperplane Hyperplane;
 
     public void Start()
     {
 #if DEBUG
-       FromFile(Shape);
+        FromFile(Shape);
 #else
         FromString(ObjectManager.GetShapeData(Shape));
 #endif
 
         Position = new Vector4(transform.position.x, transform.position.y, transform.position.z, 0);
-        Scale = new Vector4(InitialScale, InitialScale, InitialScale, InitialScale);
+        //Scale = new Vector4(InitialScale, InitialScale, InitialScale, InitialScale);
         Vertices = Vertices.Select(v => new Vector4(v.x * InitialScale, v.y * InitialScale, v.z * InitialScale, v.w * InitialScale)).ToArray();
+        Hyperplane = gameObject.GetComponentInParent<Space4DManager>().Hyperplane;
 
-
+        Update3DPosition();
         UpdateRotation();
 
     }
     public void Update()
     {
-        if (DebugRotate4D_XY)
+        if (Degrees == -1 || Degrees > 0)
         {
-            SimplyRotate(RotationPlane.xy, 0.005);
-        }
-        if (DebugRotate4D_XZ)
-        {
-            SimplyRotate(RotationPlane.xz, 0.005);
-        }
-        if (DebugRotate4D_XW)
-        {
-            SimplyRotate(RotationPlane.xw, 0.005);
-        }
-        if (DebugRotate4D_YZ)
-        {
-            SimplyRotate(RotationPlane.yz, 0.005);
-        }
-        if (DebugRotate4D_YW)
-        {
-            SimplyRotate(RotationPlane.yw, 0.005);
-        }
-        if (DebugRotate4D_ZW)
-        {
-            SimplyRotate(RotationPlane.zw, 0.005);
+            if (DebugRotate4D_XY)
+            {
+                SimplyRotate(RotationPlane.xy, 0.005);
+                if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
+            }
+            if (DebugRotate4D_XZ)
+            {
+                SimplyRotate(RotationPlane.xz, 0.005);
+                if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
+            }
+            if (DebugRotate4D_XW)
+            {
+                SimplyRotate(RotationPlane.xw, 0.005);
+                if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
+            }
+            if (DebugRotate4D_YZ)
+            {
+                SimplyRotate(RotationPlane.yz, 0.005);
+                if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
+            }
+            if (DebugRotate4D_YW)
+            {
+                SimplyRotate(RotationPlane.yw, 0.005);
+                if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
+            }
+            if (DebugRotate4D_ZW)
+            {
+                SimplyRotate(RotationPlane.zw, 0.005);
+                if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
+            }
+            if (Degrees != -1 && Degrees < 0)
+            {
+                Degrees = 0;
+            }
         }
 
         if (RotationNeedsUpdate)
@@ -101,10 +119,14 @@ public class Object4D : MonoBehaviour
         }
     }
 
+    void Update3DPosition()
+    {
+        gameObject.transform.position = new Vector3(Position.x, Position.y, Position.z);
+    }
 
     string PathToShape(Shapes shape)
     {
-        return $"Assets/4D objects/{Enum.GetName(typeof(Shapes),shape)}.4dm";
+        return $"Assets/4D objects/{Enum.GetName(typeof(Shapes), shape)}.4dm";
     }
 
     public void FromFile(Shapes shape)
@@ -112,7 +134,7 @@ public class Object4D : MonoBehaviour
         string filePath = PathToShape(shape);
         StreamReader reader = new StreamReader(filePath);
         FromReader(reader);
-        
+
     }
 
     public void FromString(string str)
@@ -230,5 +252,19 @@ public class Object4D : MonoBehaviour
         {
             RotatedVertices[i] = RotationMatrix * Vertices[i];
         }
+    }
+
+    public void RotateFromTo(Vector4 from, Vector4 to)
+    {
+        var crossproduct = GetCrossProduct(from, to);
+    }
+
+    private Vector4 GetCrossProduct(Vector4 v1, Vector4 v2)
+    {
+        v1.Normalize();
+        v2.Normalize();
+
+
+        return (new Vector4());
     }
 }

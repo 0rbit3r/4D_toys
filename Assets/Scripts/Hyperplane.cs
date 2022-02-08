@@ -44,12 +44,13 @@ public class Hyperplane : MonoBehaviour
 
 class Slider
 {
+    public float Value = 0;
+
     GameObject RightController;
     GameObject LeftController;
 
     GameObject Cylinder;
     GameObject Ball;
-    public float Value = 0;
 
     public float MaxValue = 2;
 
@@ -76,7 +77,7 @@ class Slider
         Cylinder.transform.localScale = new Vector3(SliderLength/20, SliderLength, SliderLength/20);
         Cylinder.transform.Rotate(new Vector3(0, 0, 90));
 
-        Cylinder.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Slider");
+        Cylinder.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Slider");
 
 
         Ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -84,13 +85,14 @@ class Slider
         Ball.transform.localPosition = new Vector3(0, 0, 0); 
         Ball.transform.localScale = new Vector3(SliderLength / 4, SliderLength / 4, SliderLength / 4);
 
-        Ball.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Slider");
+        Ball.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/Slider");
         
         //Ball.AddComponent<XRGrabInteractable>();
         //Ball.GetComponent<XRGrabInteractable>().tightenPosition = 0.4f;
         //Ball.GetComponent<Rigidbody>().useGravity = false;
 
     }
+    
     public void Update()
     {
         CheckForPlayerInteraction();
@@ -112,6 +114,7 @@ class Slider
 
         Value = (float)(posX / (SliderLength / MaxValue));
     }
+    
     public void CheckForPlayerInteraction()
     {
 

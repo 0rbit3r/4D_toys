@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Space4DManager : MonoBehaviour
 {
+    [SerializeField]
+    public Hyperplane Hyperplane;
+
     List<Object4D> Objects;
 
     // Start is called before the first frame update

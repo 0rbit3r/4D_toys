@@ -19,8 +19,14 @@ public static class ConvexHull
             {
                 for (int k = j + 1; k < facetVerts.Length; k++)
                 {
+
                     Plane plane1 = new Plane(facetVerts[i], facetVerts[j], facetVerts[k]);
                     Plane plane2 = new Plane(facetVerts[i], facetVerts[k], facetVerts[j]);
+
+                    if (plane1.distance == 0 && Vector3.Distance(plane1.normal, new Vector3(0, 0, 0)) == 0) //Not universal, but works for now (TODO check colinearity)
+                    {
+                        break;
+                    }
 
                     var isValid1 = true;
                     var isValid2 = true;
@@ -77,9 +83,12 @@ public static class ConvexHull
             foreach (var face2 in validFaces)
             {
                 int[] commonVerts = GetCommonVertices(face2, currentFace);
-                if (commonVerts.Length == 2)
+                if (commonVerts.Length >= 2)
                 {
-                    edges.Add((commonVerts[0], commonVerts[1]));
+                    for (int i = 0; i < commonVerts.Length - 1; i++)
+                    {
+                        edges.Add((commonVerts[i], commonVerts[i + 1]));
+                    }
                 }
             }
         }
@@ -91,11 +100,12 @@ public static class ConvexHull
     {
         for (int i = 0; i < faces.Count - 1; i++)
         {
-            for (int j = i+1; j < faces.Count; j++)
+            for (int j = i + 1; j < faces.Count; j++)
             {
-                if(AreSame(faces[i], faces[j]))
+                if (AreSame(faces[i], faces[j]))
                 {
                     faces.RemoveAt(j);
+                    j--;
                 }
             }
         }
