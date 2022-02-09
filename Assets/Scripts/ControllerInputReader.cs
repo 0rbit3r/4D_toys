@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Used as a wrapper of controller inputs.
+/// </summary>
 public class ControllerInputReader : MonoBehaviour
 {
     public InputActionMap LeftControllerInputMap { get; private set; }

@@ -19,9 +19,12 @@ public class Object4D : MonoBehaviour
     Shapes Shape;
 
     [SerializeField]
+    bool IsKinematic = false;
+
+    [SerializeField]
     float InitialScale;
 
-
+    //Following serializedFields are only for debug purposes.
     [SerializeField]
     bool DebugRotate4D_XY;
     [SerializeField]
@@ -35,7 +38,7 @@ public class Object4D : MonoBehaviour
     [SerializeField]
     bool DebugRotate4D_ZW;
     [SerializeField]
-    float Degrees = 0;
+    float Degrees = -1;
 
     public bool RotationNeedsUpdate;
 
@@ -53,6 +56,7 @@ public class Object4D : MonoBehaviour
 
     public void Start()
     {
+        Degrees = -1;
 #if DEBUG
         FromFile(Shape);
 #else
@@ -119,19 +123,20 @@ public class Object4D : MonoBehaviour
         }
     }
 
+
     void Update3DPosition()
     {
         gameObject.transform.position = new Vector3(Position.x, Position.y, Position.z);
     }
 
-    string PathToShape(Shapes shape)
+    string ShapeToPath(Shapes shape)
     {
         return $"Assets/4D objects/{Enum.GetName(typeof(Shapes), shape)}.4dm";
     }
 
     public void FromFile(Shapes shape)
     {
-        string filePath = PathToShape(shape);
+        string filePath = ShapeToPath(shape);
         StreamReader reader = new StreamReader(filePath);
         FromReader(reader);
 
@@ -193,6 +198,11 @@ public class Object4D : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates rotation matrix by multiplying it with rotation in one of 6 canonical rotation planes by given angle in radians.
+    /// </summary>
+    /// <param name="plane"></param>
+    /// <param name="angle">Angle in radians</param>
     public void SimplyRotate(RotationPlane plane, double angle)
     {
         RotationNeedsUpdate = true;
@@ -246,25 +256,41 @@ public class Object4D : MonoBehaviour
         RotationMatrix = newRotation * RotationMatrix;
     }
 
+    /// <summary>
+    /// Updates vertices by multiplying them with rotatrion Matrix;
+    /// </summary>
     public void UpdateRotation()
     {
         for (int i = 0; i < Vertices.Length; i++)
         {
             RotatedVertices[i] = RotationMatrix * Vertices[i];
         }
+        RotationNeedsUpdate = false;
     }
 
+    /// <summary>
+    /// Rotates the object by angle and direction corresponding to angle and direction between two given angles
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
     public void RotateFromTo(Vector4 from, Vector4 to)
     {
+
         var crossproduct = GetCrossProduct(from, to);
     }
 
+    /// <summary>
+    /// Returns cross product of two vectors.
+    /// </summary>
+    /// <param name="v1"></param>
+    /// <param name="v2"></param>
+    /// <returns></returns>
     private Vector4 GetCrossProduct(Vector4 v1, Vector4 v2)
     {
         v1.Normalize();
         v2.Normalize();
 
 
-        return (new Vector4());
+        return new Vector4();
     }
 }

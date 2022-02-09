@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts
 {
+    /// <summary>
+    /// Used for basic canonical rotations
+    /// </summary>
     public enum RotationPlane
     {
         xy,

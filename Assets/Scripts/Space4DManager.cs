@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Represents a 4D scene, handles objects, and physics
+/// </summary>
 public class Space4DManager : MonoBehaviour
 {
     [SerializeField]

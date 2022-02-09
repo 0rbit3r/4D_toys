@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Contains methods for algorithms on convex hulls
+/// </summary>
 public static class ConvexHull
 {
+    /// <summary>
+    /// Returns pairs of indexes corresponging to each edge in a set of convex vertices 
+    /// </summary>
+    /// <param name="facetVerts">Convex vectors in 3D</param>
+    /// <returns>array of tuples corresponding to indexes of given vectors</returns>
     public static (int, int)[] GetConvexEdges(Vector3[] facetVerts)
     {
         const float curvatureTolerance = 0.01f;
@@ -96,6 +104,10 @@ public static class ConvexHull
         return edges.ToArray();
     }
 
+    /// <summary>
+    /// Removes duplicates from list of faces
+    /// </summary>
+    /// <param name="faces">List of Faces  where each face is ordered (ascending) array of indexes</param>
     static void RemoveDuplicates(List<int[]> faces)
     {
         for (int i = 0; i < faces.Count - 1; i++)
@@ -110,6 +122,13 @@ public static class ConvexHull
             }
         }
     }
+
+    /// <summary>
+    /// Compares two int arrays
+    /// </summary>
+    /// <param name="arr1"></param>
+    /// <param name="arr2"></param>
+    /// <returns>True if the contents of two given arrays are identical</returns>
     static bool AreSame(int[] arr1, int[] arr2)
     {
         if (arr1.Length == arr2.Length)
@@ -127,6 +146,12 @@ public static class ConvexHull
         return false;
     }
 
+    /// <summary>
+    /// Returns crossesction of two sets (Used to get common edges between two faces)
+    /// </summary>
+    /// <param name="face1"></param>
+    /// <param name="face2"></param>
+    /// <returns></returns>
     static int[] GetCommonVertices(int[] face1, int[] face2)
     {
         List<int> commonVerts = new List<int>();

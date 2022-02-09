@@ -3,9 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Algorithms that help with 4D space manipulation
+/// </summary>
 public static class Utils4D
 {
+    /// <summary>
+    /// Used as colors of facets of 4D objects
+    /// </summary>
     public static Color[] FacetColors = { Color.white, Color.red, Color.green, Color.blue, Color.cyan, Color.magenta, Color.yellow, Color.gray };
+    
+    /// <summary>
+    /// Projects a 3D object from 4D space to 3D along one of the axes.
+    /// The axis to disregard is chosen in a way to avoid two points being mapped to the same location.
+    /// </summary>
+    /// <param name="vertices"></param>
+    /// <returns></returns>
     public static Vector3[] ProjectTo3D(Vector4[] vertices)
     {
         bool[] dimsAreVarying = new bool[4];

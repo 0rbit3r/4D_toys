@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Represents a "face" of a 4D object - In reality a 3D convex set of vertices suspended in 4D space.
+/// </summary>
 public class Facet : MonoBehaviour
 {
     Object4D Parent4DObject;
@@ -22,7 +25,7 @@ public class Facet : MonoBehaviour
         FacetVertIndexes = vertices;
         Parent4DObject = parent;
 
-        FacetEdges = CreateEdges();
+        InitalizeEdges();
 
 
         Material = new Material(Resources.Load<Material>("Materials/DefaultFacet"));
@@ -38,6 +41,11 @@ public class Facet : MonoBehaviour
         gameObject.GetComponent<MeshFilter>().mesh = Mesh;
 
     }
+
+    /// <summary>
+    /// Updates the sliced part of the object that is to be rendered in given hyperplane
+    /// </summary>
+    /// <param name="plane"></param>
     public void RenderIn(Hyperplane plane)
     {
         Mesh.Clear();
@@ -46,6 +54,10 @@ public class Facet : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Updates Mesh Renderer
+    /// </summary>
+    /// <param name="vertsToRender">A convex set of points laying in a plane.</param>
     private void UpdateMesh(Vector3[] vertsToRender)
     {
         if (vertsToRender.Length > 2)
@@ -70,15 +82,18 @@ public class Facet : MonoBehaviour
 
     }
 
-    private (int, int)[] CreateEdges()
+    /// <summary>
+    /// Initializes the FacetEdges of the object
+    /// </summary>
+    private void InitalizeEdges()
     {
         Vector4[] vertices = GetDereferencedVertexList();
         Vector3[] flattenedVertices = Utils4D.ProjectTo3D(vertices);
-        return ConvexHull.GetConvexEdges(flattenedVertices);
+        FacetEdges = ConvexHull.GetConvexEdges(flattenedVertices);
     }
 
     /// <summary>
-    /// Returns cross section with hyperplane
+    /// Returns cross-section with hyperplane
     /// </summary>
     /// <param name="vertices"></param>
     /// <param name="hyperplane"></param>
@@ -112,6 +127,10 @@ public class Facet : MonoBehaviour
         return resultingPolygon.ToArray();
     }
 
+    /// <summary>
+    /// Returns actual 4D vertices making up the Facet.
+    /// </summary>
+    /// <returns></returns>
     public Vector4[] GetDereferencedVertexList()
     {
         var toReturn = new Vector4[FacetVertIndexes.Length];

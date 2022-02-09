@@ -7,10 +7,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
+/// <summary>
+/// Holds position and handles movement of 3D hyperplane, in which players POV sits
+/// 
+/// Spawns slider used as a VR input
+/// </summary>
 public class Hyperplane : MonoBehaviour
 {
-    float d = 0F;
-
+    float Offeset = 0F;
 
     Slider Slider;
 
@@ -24,17 +28,29 @@ public class Hyperplane : MonoBehaviour
     void Update()
     {
         Slider.Update();
-        d = Slider.Value;
+        Offeset = Slider.Value;
     }
 
+    /// <summary>
+    /// Gives signed distance from point to the hyperplane.
+    /// </summary>
+    /// <param name="vertex"></param>
+    /// <returns></returns>
     public float DistanceTo(Vector4 vertex)
     {
-        return vertex.w - d;
+        return vertex.w - Offeset;
     }
 
+    /// <summary>
+    /// Returns a vertex corresponding to a crossection between hyperplane and a line.
+    /// Should be used when assured the point exists.
+    /// </summary>
+    /// <param name="a">4D point</param>
+    /// <param name="b">4D point</param>
+    /// <returns>3D point in the hyperplanes coordinates</returns>
     public Vector3 CrossSectionWithLine(Vector4 a, Vector4 b)
     {
-        float delta = (d - a[3]) / (b[3] - a[3]);
+        float delta = (Offeset - a[3]) / (b[3] - a[3]);
         float newX = a[0] + (b[0] - a[0]) * delta;
         float newY = a[1] + (b[1] - a[1]) * delta;
         float newZ = a[2] + (b[2] - a[2]) * delta;
@@ -42,6 +58,9 @@ public class Hyperplane : MonoBehaviour
     }
 }
 
+/// <summary>
+/// class spawning and controlling slider, that can be handled in VR to change hyperplane offset.
+/// </summary>
 class Slider
 {
     public float Value = 0;
