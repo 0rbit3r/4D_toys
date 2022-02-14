@@ -258,14 +258,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shape: 2
-  IsKinematic: 1
+  IsKinematic: 0
   InitialScale: 0.1
-  DebugRotate4D_XY: 1
-  DebugRotate4D_XZ: 0
-  DebugRotate4D_XW: 0
-  DebugRotate4D_YZ: 0
-  DebugRotate4D_YW: 0
-  DebugRotate4D_ZW: 1
+  Rotate4D_XY: 0
+  Rotate4D_XZ: 0
+  Rotate4D_XW: 0
+  Rotate4D_YZ: 0
+  Rotate4D_YW: 0
+  Rotate4D_ZW: 0
   Degrees: -1
   Vertices: []
   RotatedVertices: []
@@ -330,14 +330,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shape: 1
-  IsKinematic: 1
+  IsKinematic: 0
   InitialScale: 0.05
-  DebugRotate4D_XY: 1
-  DebugRotate4D_XZ: 0
-  DebugRotate4D_XW: 0
-  DebugRotate4D_YZ: 0
-  DebugRotate4D_YW: 0
-  DebugRotate4D_ZW: 1
+  Rotate4D_XY: 0
+  Rotate4D_XZ: 0
+  Rotate4D_XW: 0
+  Rotate4D_YZ: 0
+  Rotate4D_YW: 0
+  Rotate4D_ZW: 0
   Degrees: -1
   Vertices: []
   RotatedVertices: []
@@ -461,12 +461,12 @@ MonoBehaviour:
   Shape: 0
   IsKinematic: 1
   InitialScale: 0.35
-  DebugRotate4D_XY: 0
-  DebugRotate4D_XZ: 0
-  DebugRotate4D_XW: 0
-  DebugRotate4D_YZ: 0
-  DebugRotate4D_YW: 0
-  DebugRotate4D_ZW: 0
+  Rotate4D_XY: 0
+  Rotate4D_XZ: 0
+  Rotate4D_XW: 0
+  Rotate4D_YZ: 0
+  Rotate4D_YW: 0
+  Rotate4D_ZW: 0
   Degrees: 0
   Vertices: []
   RotatedVertices: []
@@ -1671,12 +1671,12 @@ MonoBehaviour:
   Shape: 0
   IsKinematic: 1
   InitialScale: 0.2
-  DebugRotate4D_XY: 0
-  DebugRotate4D_XZ: 0
-  DebugRotate4D_XW: 0
-  DebugRotate4D_YZ: 0
-  DebugRotate4D_YW: 0
-  DebugRotate4D_ZW: 0
+  Rotate4D_XY: 0
+  Rotate4D_XZ: 0
+  Rotate4D_XW: 0
+  Rotate4D_YZ: 0
+  Rotate4D_YW: 0
+  Rotate4D_ZW: 0
   Degrees: 90
   Vertices: []
   RotatedVertices: []
@@ -1725,12 +1725,12 @@ MonoBehaviour:
   Shape: 1
   IsKinematic: 1
   InitialScale: 0.15
-  DebugRotate4D_XY: 0
-  DebugRotate4D_XZ: 0
-  DebugRotate4D_XW: 0
-  DebugRotate4D_YZ: 0
-  DebugRotate4D_YW: 0
-  DebugRotate4D_ZW: 0
+  Rotate4D_XY: 0
+  Rotate4D_XZ: 0
+  Rotate4D_XW: 0
+  Rotate4D_YZ: 0
+  Rotate4D_YW: 0
+  Rotate4D_ZW: 0
   Degrees: 0
   Vertices: []
   RotatedVertices: []
@@ -3084,14 +3084,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shape: 0
-  IsKinematic: 1
+  IsKinematic: 0
   InitialScale: 0.1
-  DebugRotate4D_XY: 1
-  DebugRotate4D_XZ: 0
-  DebugRotate4D_XW: 0
-  DebugRotate4D_YZ: 0
-  DebugRotate4D_YW: 0
-  DebugRotate4D_ZW: 1
+  Rotate4D_XY: 0
+  Rotate4D_XZ: 0
+  Rotate4D_XW: 0
+  Rotate4D_YZ: 0
+  Rotate4D_YW: 0
+  Rotate4D_ZW: 0
   Degrees: -1
   Vertices: []
   RotatedVertices: []
@@ -3360,6 +3360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396288d764d2ed9498046ec777a645e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Offset: 0
 --- !u!4 &1903870931
 Transform:
   m_ObjectHideFlags: 0
