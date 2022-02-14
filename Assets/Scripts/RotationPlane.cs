@@ -12,7 +12,7 @@ namespace Assets.Scripts
     public enum RotationPlane
     {
         xy,
-        xz,
+        zx,
         xw,
         yz,
         yw,

@@ -16,43 +16,51 @@ public class Object4D : MonoBehaviour
         Test,
     }
     [SerializeField]
-    Shapes Shape;
+    public Shapes Shape;
 
     [SerializeField]
-    bool IsKinematic = false;
+    public bool IsKinematic = true;
 
     [SerializeField]
-    float InitialScale;
+    public float InitialScale = 0.2f;
 
     //Following serializedFields are only for debug purposes.
     [SerializeField]
-    bool DebugRotate4D_XY;
+    bool Rotate4D_XY;
     [SerializeField]
-    bool DebugRotate4D_XZ;
+    bool Rotate4D_XZ;
     [SerializeField]
-    bool DebugRotate4D_XW;
+    bool Rotate4D_XW;
     [SerializeField]
-    bool DebugRotate4D_YZ;
+    bool Rotate4D_YZ;
     [SerializeField]
-    bool DebugRotate4D_YW;
+    bool Rotate4D_YW;
     [SerializeField]
-    bool DebugRotate4D_ZW;
+    bool Rotate4D_ZW;
     [SerializeField]
     float Degrees = -1;
 
-    public bool RotationNeedsUpdate;
+    private bool RotationNeedsUpdate;
+    private bool PositionNeedsUpdate;
 
     public Vector4[] Vertices;
 
     public Vector4[] RotatedVertices;
 
-    GameObject[] Facets;
+    public GameObject[] Facets { get; private set; }
 
-    Vector4 Position;
+    public Vector4 Position { get; private set; }
     //Vector4 Scale;
     Matrix4x4 RotationMatrix = Matrix4x4.identity;
 
-    Hyperplane Hyperplane;
+    ViewerHyperplane Hyperplane;
+
+    public IBoundingBox BoundingBox;
+
+    public void Awake()
+    {
+
+    }
 
     public void Start()
     {
@@ -60,48 +68,57 @@ public class Object4D : MonoBehaviour
 #if DEBUG
         FromFile(Shape);
 #else
-        FromString(ObjectManager.GetShapeData(Shape));
+        FromString(ObjectDataManager.GetShapeData(Shape));
 #endif
 
         Position = new Vector4(transform.position.x, transform.position.y, transform.position.z, 0);
         //Scale = new Vector4(InitialScale, InitialScale, InitialScale, InitialScale);
         Vertices = Vertices.Select(v => new Vector4(v.x * InitialScale, v.y * InitialScale, v.z * InitialScale, v.w * InitialScale)).ToArray();
-        Hyperplane = gameObject.GetComponentInParent<Space4DManager>().Hyperplane;
+
+        if (gameObject.transform.parent == null)
+        {
+            Hyperplane = new ViewerHyperplane();
+        }
+        else
+        {
+            Hyperplane = gameObject.GetComponentInParent<Physics4DSpace>().Hyperplane;
+        }
+        BoundingBox = new ObjectBoundingBox(Position, Vertices);
 
         Update3DPosition();
         UpdateRotation();
-
     }
     public void Update()
     {
+
         if (Degrees == -1 || Degrees > 0)
         {
-            if (DebugRotate4D_XY)
+            if (Rotate4D_XY)
             {
                 SimplyRotate(RotationPlane.xy, 0.005);
                 if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
             }
-            if (DebugRotate4D_XZ)
+            if (Rotate4D_XZ)
             {
-                SimplyRotate(RotationPlane.xz, 0.005);
+                SimplyRotate(RotationPlane.zx, 0.005);
                 if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
             }
-            if (DebugRotate4D_XW)
+            if (Rotate4D_XW)
             {
                 SimplyRotate(RotationPlane.xw, 0.005);
                 if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
             }
-            if (DebugRotate4D_YZ)
+            if (Rotate4D_YZ)
             {
                 SimplyRotate(RotationPlane.yz, 0.005);
                 if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
             }
-            if (DebugRotate4D_YW)
+            if (Rotate4D_YW)
             {
                 SimplyRotate(RotationPlane.yw, 0.005);
                 if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
             }
-            if (DebugRotate4D_ZW)
+            if (Rotate4D_ZW)
             {
                 SimplyRotate(RotationPlane.zw, 0.005);
                 if (Degrees != -1) Degrees -= 180f / (float)Math.PI * 0.005f;
@@ -115,15 +132,34 @@ public class Object4D : MonoBehaviour
         if (RotationNeedsUpdate)
         {
             UpdateRotation();
+            UpdateBoundingBox();
+        }
+
+        if (PositionNeedsUpdate)
+        {
+            Update3DPosition();
+            UpdateBoundingBox();
         }
 
         foreach (var facet in Facets)
         {
-            facet.GetComponent<Facet>().RenderIn(Hyperplane);
+            facet.GetComponent<Facet>().RenderIn(Hyperplane, Position.w);
         }
     }
 
+    public void Move(Vector4 direction)
+    {
+        Position += direction;
 
+        PositionNeedsUpdate = true;
+    }
+
+    public void MoveTo(Vector4 newPosition)
+    {
+        Position = newPosition;
+
+        PositionNeedsUpdate = true;
+    }
     void Update3DPosition()
     {
         gameObject.transform.position = new Vector3(Position.x, Position.y, Position.z);
@@ -220,7 +256,7 @@ public class Object4D : MonoBehaviour
                                             new Vector4(0, 0, 1, 0),
                                             new Vector4(0, 0, 0, 1));
                 break;
-            case RotationPlane.xz:
+            case RotationPlane.zx:
                 newRotation = new Matrix4x4(new Vector4(cos, 0, -sin, 0),
                                             new Vector4(0, 1, 0, 0),
                                             new Vector4(sin, 0, cos, 0),
@@ -259,7 +295,7 @@ public class Object4D : MonoBehaviour
     /// <summary>
     /// Updates vertices by multiplying them with rotatrion Matrix;
     /// </summary>
-    public void UpdateRotation()
+    private void UpdateRotation()
     {
         for (int i = 0; i < Vertices.Length; i++)
         {
@@ -268,29 +304,8 @@ public class Object4D : MonoBehaviour
         RotationNeedsUpdate = false;
     }
 
-    /// <summary>
-    /// Rotates the object by angle and direction corresponding to angle and direction between two given angles
-    /// </summary>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    public void RotateFromTo(Vector4 from, Vector4 to)
+    private void UpdateBoundingBox()
     {
-
-        var crossproduct = GetCrossProduct(from, to);
-    }
-
-    /// <summary>
-    /// Returns cross product of two vectors.
-    /// </summary>
-    /// <param name="v1"></param>
-    /// <param name="v2"></param>
-    /// <returns></returns>
-    private Vector4 GetCrossProduct(Vector4 v1, Vector4 v2)
-    {
-        v1.Normalize();
-        v2.Normalize();
-
-
-        return new Vector4();
+        BoundingBox.Update(Position, Vertices);
     }
 }

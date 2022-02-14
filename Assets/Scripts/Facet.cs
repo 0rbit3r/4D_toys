@@ -20,6 +20,8 @@ public class Facet : MonoBehaviour
 
     Material Material;
 
+    public IBoundingBox BoundingBox { get; private set; }
+
     public void Init(int[] vertices, Color color, Object4D parent)
     {
         FacetVertIndexes = vertices;
@@ -40,18 +42,24 @@ public class Facet : MonoBehaviour
         Mesh = new Mesh();
         gameObject.GetComponent<MeshFilter>().mesh = Mesh;
 
+        BoundingBox = new FacetBoundingBox(Parent4DObject.Vertices, Parent4DObject.Position, FacetVertIndexes);
+
+    }
+
+    public void UpdatweBoundingBox()
+    {
+        BoundingBox.Update(Parent4DObject.Position, FacetVertIndexes);
     }
 
     /// <summary>
     /// Updates the sliced part of the object that is to be rendered in given hyperplane
     /// </summary>
     /// <param name="plane"></param>
-    public void RenderIn(Hyperplane plane)
+    public void RenderIn(ViewerHyperplane plane, float positionW)
     {
         Mesh.Clear();
-        var vectors = CutWith(Parent4DObject.RotatedVertices, plane);
+        var vectors = plane.CutEdges(FacetEdges, Parent4DObject.RotatedVertices, FacetVertIndexes, positionW);
         UpdateMesh(vectors);
-
     }
 
     /// <summary>
@@ -90,41 +98,6 @@ public class Facet : MonoBehaviour
         Vector4[] vertices = GetDereferencedVertexList();
         Vector3[] flattenedVertices = Utils4D.ProjectTo3D(vertices);
         FacetEdges = ConvexHull.GetConvexEdges(flattenedVertices);
-    }
-
-    /// <summary>
-    /// Returns cross-section with hyperplane
-    /// </summary>
-    /// <param name="vertices"></param>
-    /// <param name="hyperplane"></param>
-    /// <returns></returns>
-    public Vector3[] CutWith(Vector4[] vertices, Hyperplane hyperplane)
-    {
-        List<Vector3> resultingPolygon = new List<Vector3>();
-
-        foreach (var edge in FacetEdges)
-        {
-            var bod1 = vertices[FacetVertIndexes[edge.Item1]];
-            var bod2 = vertices[FacetVertIndexes[edge.Item2]];
-            var distance1 = hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item1]]);
-            var distance2 = hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item2]]);
-
-
-            if ((hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item1]]) < 0 && hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item2]]) >= 0)
-                || (hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item1]]) >= 0 && hyperplane.DistanceTo(vertices[FacetVertIndexes[edge.Item2]]) < 0))
-            {
-                resultingPolygon.Add(hyperplane.CrossSectionWithLine(vertices[FacetVertIndexes[edge.Item1]], vertices[FacetVertIndexes[edge.Item2]]));
-            }
-        }
-
-        resultingPolygon = resultingPolygon.Distinct().ToList();
-        if (resultingPolygon.Count >= 3)
-        {
-            var baseVector = resultingPolygon[1] - resultingPolygon[0];
-            resultingPolygon.Sort((x, y) => Vector3.Angle(baseVector, x - resultingPolygon[0]).CompareTo(Vector3.Angle(baseVector, y - resultingPolygon[0]))); //Possibly needs more thought
-        }
-
-        return resultingPolygon.ToArray();
     }
 
     /// <summary>
